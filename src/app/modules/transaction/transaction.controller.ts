@@ -4,11 +4,13 @@ import { TransactionService } from "./transaction.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { PayType } from "./transaction.interface";
+import AppError from "../../errorHelpers/AppError";
 
 // add money
 const addMoney = catchAsync(async (req: Request, res: Response) => {
   const type = PayType.ADD_MONEY;
   const { role, id: userId } = req.user;
+
   const addMoney = await TransactionService.addMoney(
     req.body,
     type,
@@ -82,14 +84,16 @@ const getTransactionHistory = catchAsync(
 //get Transaction History by admin
 const getAllTransactionHistory = catchAsync(
   async (req: Request, res: Response) => {
-    const getAllTransaction =
-      await TransactionService.getAllTransactionHistory();
-
+    const transactionHistory = res.locals.data;
+    if (transactionHistory.data.length === 0) {
+      throw new AppError(httpStatus.NOT_FOUND, "No transaction history found");
+    }
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: "All transaction history retrieved successfully",
-      data: getAllTransaction,
+      meta: transactionHistory.meta,
+      data: transactionHistory.data,
     });
   }
 );

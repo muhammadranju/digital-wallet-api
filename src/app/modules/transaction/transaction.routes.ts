@@ -4,6 +4,8 @@ import { checkAuth } from "../../middlewares/checkAuth";
 import { Role } from "../user/user.interface";
 import { zodValidateRequest } from "../../middlewares/zodValidateRequest";
 import { createTransactionZodSchema } from "./transaction.zod.validation";
+import { queryBuilders } from "../../middlewares/queryBuilders";
+import { Transaction } from "./transaction.model";
 
 const transactionRoute = express.Router();
 
@@ -37,6 +39,7 @@ transactionRoute.get(
 transactionRoute.get(
   "/",
   checkAuth(Role.ADMIN),
+    queryBuilders(Transaction),
   TransactionController.getAllTransactionHistory
 );
 
