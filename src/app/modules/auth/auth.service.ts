@@ -5,7 +5,7 @@ import httpStatus from "http-status-codes";
 import bcrypt from "bcryptjs";
 import { createUserTokens } from "../../utils/userToken";
 
-const createLogin = async (payload: Partial<IUser>) => {
+const userLogin = async (payload: Partial<IUser>) => {
   const { email, password } = payload;
   const isExistUser = await User.findOne({ email });
 
@@ -46,5 +46,5 @@ const createLogin = async (payload: Partial<IUser>) => {
 };
 
 export const AuthService = {
-  createLogin,
+  userLogin,
 };

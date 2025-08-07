@@ -7,9 +7,9 @@ import { setAuthCookie } from "../../utils/setCookie";
 import config from "../../config";
 
 // user login
-const createLogin = catchAsync(
+const userLogin = catchAsync(
   async (req: Request, res: Response, next: NextFunction) => {
-    const userInfo = await AuthService.createLogin(req.body);
+    const userInfo = await AuthService.userLogin(req.body);
 
     setAuthCookie(res, userInfo);
     sendResponse(res, {
@@ -44,6 +44,6 @@ const logOutUser = catchAsync(
 );
 
 export const AuthController = {
-  createLogin,
+  userLogin,
   logOutUser,
 };

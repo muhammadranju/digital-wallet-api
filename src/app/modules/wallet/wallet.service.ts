@@ -4,7 +4,7 @@ import { Wallet } from "./wallet.model";
 import httpStatus from "http-status-codes";
 
 //get all wallets
-const getAllWalletsByRole = async (role: string) => {
+const getAllWalletsUsingRoles = async (role: string) => {
   if (role !== Role.USER && role !== Role.AGENT) {
     throw new AppError(httpStatus.BAD_REQUEST, `Invalid role: ${role}`);
   }
@@ -17,7 +17,7 @@ const getAllWalletsByRole = async (role: string) => {
   return filterWallets;
 };
 
-const getMeWallet = async (id: string) => {
+const getMyWallets = async (id: string) => {
   const wallet = await Wallet.findOne({ user: id }).populate({
     path: "user",
     select: "name email role",
@@ -63,8 +63,8 @@ const unblockWallet = async (id: string) => {
 };
 
 export const WalletServices = {
-  getAllWalletsByRole,
-  getMeWallet,
+  getAllWalletsUsingRoles,
+  getMyWallets,
   blockWallet,
   unblockWallet,
 };

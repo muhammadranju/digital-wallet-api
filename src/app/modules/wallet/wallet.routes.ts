@@ -8,13 +8,13 @@ const walletRoute = express.Router();
 walletRoute.get(
   "/",
   checkAuth(Role.ADMIN),
-  WalletController.getAllWalletsByRole
+  WalletController.getAllWalletsUsingRoles
 );
 
 walletRoute.get(
   "/me",
   checkAuth(Role.AGENT, Role.USER),
-  WalletController.getMeWallet
+  WalletController.getMyWallets
 );
 
 walletRoute.patch(
