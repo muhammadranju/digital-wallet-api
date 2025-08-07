@@ -16,13 +16,13 @@ userRoute.post(
 userRoute.get("/", checkAuth(Role.ADMIN), UserControllers.getAllUserOrAgent);
 
 userRoute.patch(
-  "/:id/approve",
+  "/approve/:id",
   checkAuth(Role.ADMIN),
   UserControllers.approveAgent
 );
 
 userRoute.patch(
-  "/:id/suspend",
+  "/suspend/:id",
   checkAuth(Role.ADMIN),
   UserControllers.suspendAgent
 );
